@@ -2,7 +2,7 @@
 
 ###Demo
 
-    #### 配置文件
+    1.配置文件
     
    	<!--http连接池配置-->
    	<bean id="connectionPool" class="okhttp3.ConnectionPool">
@@ -20,7 +20,7 @@
    		<property name="basePackage" value="com"></property>
    	</bean>
    	
-   	#### 接口
+   	2.接口
    	
     public interface IPushHttpService<T> {
     
@@ -34,7 +34,7 @@
     
     }
     
-    #### junit
+    3.junit
     
     public class DemoTest {
     
