@@ -3,6 +3,7 @@
 ###Demo
 
     1.配置文件
+    
         <!--http连接池配置-->
         <bean id="connectionPool" class="okhttp3.ConnectionPool">
             <constructor-arg index="0"  value="100"/>
@@ -33,7 +34,7 @@
         
         }
     
-    3.junit
+    3.Junit
     
         public class DemoTest {
         

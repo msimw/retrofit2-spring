@@ -18,14 +18,14 @@ import java.io.IOException;
 @ContextConfiguration("classpath:applicationContext-httpclient-retrofit2.xml")
 public class DemoTest {
 
-  @Autowired
-  private IPushHttpService<String> pushHttpService;
+    @Autowired
+    private IPushHttpService<String> pushHttpService;
 
 
-  @Test
-  public void oneTest() throws IOException {
-      this.pushHttpService.push().execute();
-  }
+    @Test
+    public void oneTest() throws IOException {
+        this.pushHttpService.push().execute();
+    }
 
 
 }
