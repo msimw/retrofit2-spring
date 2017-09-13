@@ -22,9 +22,6 @@
    	
    	#### 接口
    	
-   	/**
-     * Created by msimw on 17-9-13.
-     */
     public interface IPushHttpService<T> {
     
         @POST("b")
