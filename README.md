@@ -19,9 +19,9 @@
             <property name="connectionPool" ref="connectionPool"></property>
             <property name="basePackage" value="com"></property>
         </bean>
-        
-   	2.接口
-   	
+
+    2.接口
+    
         public interface IPushHttpService<T> {
         
             @POST("b")
