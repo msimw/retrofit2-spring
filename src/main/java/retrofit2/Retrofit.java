@@ -66,9 +66,9 @@ public class Retrofit {
   final  Executor callbackExecutor;
   final boolean validateEagerly;
 
-  Retrofit(okhttp3.Call.Factory callFactory, HttpUrl baseUrl,
-      List<Converter.Factory> converterFactories, List<CallAdapter.Factory> adapterFactories, 
-           Executor callbackExecutor, boolean validateEagerly) {
+  public Retrofit(okhttp3.Call.Factory callFactory, HttpUrl baseUrl,
+                  List<Converter.Factory> converterFactories, List<CallAdapter.Factory> adapterFactories,
+                  Executor callbackExecutor, boolean validateEagerly) {
     this.callFactory = callFactory;
     this.baseUrl = baseUrl;
     this.converterFactories = unmodifiableList(converterFactories); // Defensive copy at call site.
