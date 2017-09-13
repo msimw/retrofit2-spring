@@ -1,1 +1,1 @@
-一个类似与dubbo调用方式的http客户端,retrofit2 with spring
+##retrofit2 with spring4
