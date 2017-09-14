@@ -18,7 +18,7 @@ import org.springframework.util.StringUtils;
  *
  * Http service 扫描配置
  */
-public class HttpServiceScannerConfigurer implements BeanDefinitionRegistryPostProcessor , InitializingBean,ApplicationContextAware {
+public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProcessor , InitializingBean,ApplicationContextAware {
 
     private String basePackage;// * one,** many
 
@@ -32,7 +32,7 @@ public class HttpServiceScannerConfigurer implements BeanDefinitionRegistryPostP
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        HttpServiceScanner scanner = new HttpServiceScanner(registry);
+        HttpApiScanner scanner = new HttpApiScanner(registry);
         scanner.setWriteTimeOut(this.writeTimeOut);
         scanner.setReadTimeOut(this.readTimeOut);
         scanner.setConnTimeOut(this.connTimeOut);

@@ -30,7 +30,7 @@
 
     </bean>
 
-    <bean class="com.msimw.retrofit2x.spring.HttpServiceScannerConfigurer">
+    <bean class="com.msimw.retrofit2x.spring.HttpApiScannerConfigurer">
         <property name="connTimeOut" value="15"></property>
         <property name="writeTimeOut" value="15"></property>
         <property name="readTimeOut" value="15"></property>

@@ -12,7 +12,7 @@
         </bean>
         
         <!--httpapi 扫描配置-->
-        <bean class="com.msimw.retrofit2x.spring.HttpServiceScannerConfigurer">
+        <bean class="com.msimw.retrofit2x.spring.HttpApiScannerConfigurer">
             <property name="connTimeOut" value="15"></property>
             <property name="writeTimeOut" value="15"></property>
             <property name="readTimeOut" value="15"></property>
@@ -22,7 +22,7 @@
 
     2.接口
     
-        public interface IPushHttpService<T> {
+        public interface IPushHttpApi<T> {
         
             @POST("b")
             public Call<String> push();
@@ -30,7 +30,7 @@
         
         
         @HttpApi("http://www.baidu.com/")
-        public interface IBaiduPushHttpService extends IPushHttpService<String>{
+        public interface IBaiduPushHttpApi extends IPushHttpApi<String>{
         
         }
     
@@ -39,12 +39,12 @@
         public class DemoTest {
         
           @Autowired
-          private IPushHttpService<String> pushHttpService;
+          private IPushHttpApi<String> pushHttpApi;
         
         
           @Test
           public void oneTest() throws IOException {
-              this.pushHttpService.push().execute();
+              this.pushHttpApi.push().execute();
           }
         
         

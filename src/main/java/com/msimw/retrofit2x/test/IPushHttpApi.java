@@ -8,7 +8,7 @@ import com.msimw.retrofit2x.retrofit.http.POST;
 /**
  * Created by msimw on 17-9-13.
  */
-public interface IPushHttpService<T> {
+public interface IPushHttpApi<T> {
 
     @POST("b")
     public Call<String> push(@Header("zhost") String host);

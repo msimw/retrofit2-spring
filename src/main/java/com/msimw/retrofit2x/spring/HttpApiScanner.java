@@ -17,7 +17,7 @@ import java.util.Set;
  *
  * Http service 扫描
  */
-public class HttpServiceScanner extends ClassPathBeanDefinitionScanner {
+public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
 
 
     private  int readTimeOut = 15;
@@ -25,7 +25,7 @@ public class HttpServiceScanner extends ClassPathBeanDefinitionScanner {
     private  int connTimeOut = 15;
     private ConnectionPool connectionPool;
 
-    public HttpServiceScanner(BeanDefinitionRegistry registry) {
+    public HttpApiScanner(BeanDefinitionRegistry registry) {
         super(registry);
     }
 

@@ -1,8 +1,7 @@
 package com.msimw;
 
 import com.msimw.retrofit2x.retrofit.Response;
-import com.msimw.retrofit2x.test.IPushHttpService;
-import org.junit.Ignore;
+import com.msimw.retrofit2x.test.IPushHttpApi;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +19,12 @@ import java.io.IOException;
 public class DemoTest {
 
     @Autowired
-    private IPushHttpService<String> pushHttpService;
+    private IPushHttpApi<String> pushHttpApi;
 
 
     @Test
     public void oneTest() throws IOException {
-        Response<String> execute = this.pushHttpService.push("www.baidu.com").execute();
+        Response<String> execute = this.pushHttpApi.push("www.baidu.com").execute();
         System.out.println(execute.body());
     }
 
