@@ -30,11 +30,13 @@
 
     </bean>
 
+    <!--http扫包配置-->
     <bean class="com.msimw.retrofit2x.spring.HttpApiScannerConfigurer">
         <property name="connTimeOut" value="15"></property>
         <property name="writeTimeOut" value="15"></property>
         <property name="readTimeOut" value="15"></property>
         <property name="connectionPool" ref="connectionPool"></property>
+        <!--与spring扫包配置一样-->
         <property name="basePackage" value="com"></property>
     </bean>
 

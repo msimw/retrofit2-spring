@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by msimw on 17-9-12.
  */
-//@Ignore
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-httpclient-retrofit2.xml")
 public class DemoTest {
@@ -23,9 +23,8 @@ public class DemoTest {
 
 
     @Test
-    public void oneTest() throws IOException {
-        String push = this.pushHttpApi.push("127.0.0.1");
-        System.out.println(push);
+    public void helloWorld() throws IOException {
+        System.out.println(this.pushHttpApi.push("www.baidu.com"));
     }
 
 
