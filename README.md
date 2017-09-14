@@ -12,7 +12,7 @@
         </bean>
         
         <!--httpapi 扫描配置-->
-        <bean class="com.msimw.httpservice.client.spring.HttpServiceScannerConfigurer">
+        <bean class="com.msimw.retrofit2x.spring.HttpServiceScannerConfigurer">
             <property name="connTimeOut" value="15"></property>
             <property name="writeTimeOut" value="15"></property>
             <property name="readTimeOut" value="15"></property>

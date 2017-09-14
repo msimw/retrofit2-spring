@@ -1,6 +1,7 @@
 package com.msimw;
 
-import com.msimw.httpservice.client.test.IPushHttpService;
+import com.msimw.retrofit2x.retrofit.Response;
+import com.msimw.retrofit2x.test.IPushHttpService;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by msimw on 17-9-12.
  */
-@Ignore
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-httpclient-retrofit2.xml")
 public class DemoTest {
@@ -24,7 +25,8 @@ public class DemoTest {
 
     @Test
     public void oneTest() throws IOException {
-        this.pushHttpService.push().execute();
+        Response<String> execute = this.pushHttpService.push().execute();
+        System.out.println(execute.body());
     }
 
 
