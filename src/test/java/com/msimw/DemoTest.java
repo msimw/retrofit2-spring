@@ -1,7 +1,7 @@
 package com.msimw;
 
-import com.msimw.retrofit2x.retrofit.Response;
 import com.msimw.retrofit2x.test.IPushHttpApi;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by msimw on 17-9-12.
  */
-//@Ignore
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-httpclient-retrofit2.xml")
 public class DemoTest {
@@ -24,8 +24,8 @@ public class DemoTest {
 
     @Test
     public void oneTest() throws IOException {
-        Response<String> execute = this.pushHttpApi.push("www.baidu.com").execute();
-        System.out.println(execute.body());
+        String push = this.pushHttpApi.push("www.baidu.com");
+        System.out.println(push);
     }
 
 

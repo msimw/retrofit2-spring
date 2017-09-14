@@ -27,15 +27,14 @@ public class DefaultCallAdapterFactory extends CallAdapter.Factory {
   static final CallAdapter.Factory INSTANCE = new DefaultCallAdapterFactory();
 
   @Override
-  public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
-    if (getRawType(returnType) != Call.class) {
-      return null;
+  public CallAdapter<?, ?> get(final Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    final Type [] returnTypes = new Type[]{returnType};
+    if (getRawType(returnType) == Call.class) {
+      returnTypes[0] = Utils.getCallResponseType(returnType);
     }
-
-    final Type responseType = Utils.getCallResponseType(returnType);
     return new CallAdapter<Object, Call<?>>() {
       @Override public Type responseType() {
-        return responseType;
+        return returnTypes[0];
       }
 
       @Override public Call<Object> adapt(Call<Object> call) {

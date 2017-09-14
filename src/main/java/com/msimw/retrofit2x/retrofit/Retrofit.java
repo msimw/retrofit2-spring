@@ -100,7 +100,15 @@ public class Retrofit {
             ServiceMethod<Object, Object> serviceMethod =
                 (ServiceMethod<Object, Object>) loadServiceMethod(method);
             OkHttpCall<Object> okHttpCall = new OkHttpCall<>(serviceMethod, args);
-            return serviceMethod.callAdapter.adapt(okHttpCall);
+            Call call = (Call) serviceMethod.callAdapter.adapt(okHttpCall);
+
+            /**
+             * 如果 不是 call 就同步调用并返回
+             */
+            if(Utils.getRawType(method.getGenericReturnType()) != Call.class){
+              return call.execute().body();
+            }
+            return call;
           }
         });
   }
@@ -410,7 +418,7 @@ public class Retrofit {
       return baseUrl(httpUrl);
     }
 
-    
+
     public Builder baseUrl(HttpUrl baseUrl) {
       checkNotNull(baseUrl, "baseUrl == null");
       List<String> pathSegments = baseUrl.pathSegments();
