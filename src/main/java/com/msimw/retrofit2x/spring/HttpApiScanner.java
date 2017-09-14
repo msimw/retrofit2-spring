@@ -25,6 +25,8 @@ public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
     private  int connTimeOut = 15;
     private ConnectionPool connectionPool;
 
+    private boolean throwFail = false;
+
     public HttpApiScanner(BeanDefinitionRegistry registry) {
         super(registry);
     }
@@ -54,6 +56,7 @@ public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
             definition.getPropertyValues().add("writeTimeOut", this.writeTimeOut);
             definition.getPropertyValues().add("connTimeOut", this.connTimeOut);
             definition.getPropertyValues().add("connectionPool", this.connectionPool);
+            definition.getPropertyValues().add("throwFail", this.throwFail);
             definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
         }
         return beanDefinitionHolders;
@@ -90,5 +93,13 @@ public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
 
     public void setConnectionPool(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
+    }
+
+    public boolean isThrowFail() {
+        return throwFail;
+    }
+
+    public void setThrowFail(boolean throwFail) {
+        this.throwFail = throwFail;
     }
 }

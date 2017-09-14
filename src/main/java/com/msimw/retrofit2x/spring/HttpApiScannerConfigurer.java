@@ -26,6 +26,8 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
     private  int writeTimeOut = 15;
     private  int connTimeOut = 15;
     private ConnectionPool connectionPool;
+    private boolean throwFail = false;
+
 
     private ApplicationContext applicationContext;
 
@@ -37,6 +39,7 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
         scanner.setReadTimeOut(this.readTimeOut);
         scanner.setConnTimeOut(this.connTimeOut);
         scanner.setConnectionPool(this.connectionPool);
+        scanner.setThrowFail(this.throwFail);
         scanner.setResourceLoader(this.applicationContext);
         scanner.addIncludeFilter(new AnnotationTypeFilter(HttpApi.class));
         scanner.setBeanNameGenerator(null);
@@ -88,6 +91,14 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
 
     public ConnectionPool getConnectionPool() {
         return connectionPool;
+    }
+
+    public boolean isThrowFail() {
+        return throwFail;
+    }
+
+    public void setThrowFail(boolean throwFail) {
+        this.throwFail = throwFail;
     }
 
     public void setConnectionPool(ConnectionPool connectionPool) {

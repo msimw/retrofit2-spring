@@ -25,6 +25,8 @@ public class RetrofitBeanFactory implements FactoryBean<Object> {
 
     private Class<?> serviceClass;
 
+    private boolean throwFail = false;
+
 
 
 
@@ -63,11 +65,19 @@ public class RetrofitBeanFactory implements FactoryBean<Object> {
                     .baseUrl(HttpUrl.parse(baseUrl))
                     .client(clientBuilder.build())
                     .addConverterFactory(FastJsonConverterFactory.create())
-                    .build();
+                    .build()
+                    .throwFail(this.throwFail);
              return retrofit.create(serviceClass);
 
     }
 
+    public boolean isThrowFail() {
+        return throwFail;
+    }
+
+    public void setThrowFail(boolean throwFail) {
+        this.throwFail = throwFail;
+    }
 
     public int getReadTimeOut() {
         return readTimeOut;

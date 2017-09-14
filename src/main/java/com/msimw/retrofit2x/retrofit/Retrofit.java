@@ -63,6 +63,7 @@ public class Retrofit {
   final List<CallAdapter.Factory> adapterFactories;
   final  Executor callbackExecutor;
   final boolean validateEagerly;
+  boolean throwFail = false;
 
   public Retrofit(okhttp3.Call.Factory callFactory, HttpUrl baseUrl,
                   List<Converter.Factory> converterFactories, List<CallAdapter.Factory> adapterFactories,
@@ -77,7 +78,7 @@ public class Retrofit {
 
 
   @SuppressWarnings("unchecked") // Single-interface proxy creation guarded by parameter safety.
-  public <T> T create(final Class<T> service) {
+  public <T> T create(final Class<T> service)  {
     if (!service.isInterface()) {
       throw new IllegalArgumentException("API declarations must be interfaces.");
     }
@@ -106,12 +107,26 @@ public class Retrofit {
              * 如果 不是 call 就同步调用并返回
              */
             if(Utils.getRawType(method.getGenericReturnType()) != Call.class){
-              return call.execute().body();
+              Response execute = call.execute();
+              if(execute.isSuccessful()){
+                return execute.body();
+              }else{
+                if(throwFail){
+                throw new HttpCallException("http return code >= 200 && code < 300");
+                }
+                return null;
+              }
             }
             return call;
           }
         });
   }
+
+  public Retrofit throwFail(boolean throwFail){
+    this.throwFail = throwFail;
+    return this;
+  }
+
 
   private void eagerlyValidateMethods(Class<?> service) {
     Platform platform = Platform.get();
