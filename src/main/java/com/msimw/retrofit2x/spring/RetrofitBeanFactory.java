@@ -1,6 +1,7 @@
 package com.msimw.retrofit2x.spring;
 
 import com.msimw.retrofit2x.annotation.HttpApi;
+import com.msimw.retrofit2x.interceptor.HostReplaceInterceptor;
 import com.msimw.retrofit2x.retrofit.Retrofit;
 import com.msimw.retrofit2x.retrofit.json.FastJsonConverterFactory;
 import com.msimw.retrofit2x.retrofit.log.LoggingInterceptor;
@@ -43,6 +44,7 @@ public class RetrofitBeanFactory implements FactoryBean<Object> {
                     .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
                     .readTimeout(connTimeOut, TimeUnit.SECONDS)
                     .connectionPool(connectionPool)
+                    .addInterceptor(new HostReplaceInterceptor())
                     .addInterceptor(new LoggingInterceptor());
             if (interceptorClass != null && interceptorClass.length > 0) {
                 for (Class clazz : interceptorClass) {

@@ -2,6 +2,7 @@ package com.msimw.retrofit2x.test;
 
 
 import com.msimw.retrofit2x.retrofit.Call;
+import com.msimw.retrofit2x.retrofit.http.Header;
 import com.msimw.retrofit2x.retrofit.http.POST;
 
 /**
@@ -10,5 +11,5 @@ import com.msimw.retrofit2x.retrofit.http.POST;
 public interface IPushHttpService<T> {
 
     @POST("b")
-    public Call<String> push();
+    public Call<String> push(@Header("zhost") String host);
 }

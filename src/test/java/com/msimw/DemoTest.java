@@ -25,7 +25,7 @@ public class DemoTest {
 
     @Test
     public void oneTest() throws IOException {
-        Response<String> execute = this.pushHttpService.push().execute();
+        Response<String> execute = this.pushHttpService.push("www.baidu.com").execute();
         System.out.println(execute.body());
     }
 
