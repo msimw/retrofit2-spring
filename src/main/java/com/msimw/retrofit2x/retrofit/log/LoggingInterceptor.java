@@ -17,7 +17,7 @@ public class LoggingInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        logger.info(String.format("发送请求：%s%n请求头：%s",
+        logger.debug(String.format("发送请求：%s%n请求头：%s",
                 request.url(), request.headers()));
         Response response = chain.proceed(request);
         return response;
