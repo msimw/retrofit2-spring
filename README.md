@@ -1,8 +1,15 @@
-##retrofit2 with spring4
+## retrofit2 with spring
+   Http 接口调用API(对httpclient的封装基于OkHttp3)，支持接口泛型注入。调用http接口就像调用本地接口一样简单（不用编写实现类）
+### 文档地址 https://msimw.gitbooks.io/retrofit2-spring/content/
 
-###Demo
+### 功能描述
+    1.与spring整合，将httpApi 交由spring容器管理，支持IOC
+    2.支持接口继承+泛型注入
+    3.支持直接返回结果对象
 
-    1.配置文件
+### 简单使用
+
+#### 1.配置文件
     
         <!--http连接池配置-->
         <bean id="connectionPool" class="okhttp3.ConnectionPool">
@@ -12,7 +19,7 @@
         </bean>
         
         <!--httpapi 扫描配置-->
-        <bean class="com.msimw.httpservice.client.spring.HttpServiceScannerConfigurer">
+        <bean class="com.msimw.retrofit2x.spring.HttpApiScannerConfigurer">
             <property name="connTimeOut" value="15"></property>
             <property name="writeTimeOut" value="15"></property>
             <property name="readTimeOut" value="15"></property>
@@ -20,31 +27,33 @@
             <property name="basePackage" value="com"></property>
         </bean>
 
-    2.接口
-    
-        public interface IPushHttpService<T> {
+#### 2.接口
         
+        
+        public interface IPushHttpApi<T> {
+      
             @POST("b")
-            public Call<String> push();
+            public String push();
+        
         }
         
         
         @HttpApi("http://www.baidu.com/")
-        public interface IBaiduPushHttpService extends IPushHttpService<String>{
+        public interface IBaiduPushHttpApi extends IPushHttpApi<String>{
         
         }
     
-    3.Junit
+#### 3.Junit
     
         public class DemoTest {
         
           @Autowired
-          private IPushHttpService<String> pushHttpService;
+          private IPushHttpApi<String> pushHttpApi;
         
         
           @Test
           public void oneTest() throws IOException {
-              this.pushHttpService.push().execute();
+              this.pushHttpApi.push();
           }
         
         
