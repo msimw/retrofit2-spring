@@ -23,11 +23,13 @@
         </bean>
 
 #### 2.接口
-    
-        public interface IPushHttpApi<T> {
         
+        
+        public interface IPushHttpApi<T> {
+      
             @POST("b")
-            public Call<String> push();
+            public String push();
+        
         }
         
         
@@ -46,7 +48,7 @@
         
           @Test
           public void oneTest() throws IOException {
-              this.pushHttpApi.push().execute();
+              this.pushHttpApi.push();
           }
         
         
