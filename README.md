@@ -1,8 +1,9 @@
-##retrofit2 with spring4
+## retrofit2 with spring4
+   Http接口调用API，使调用http接口就像调用本地接口一样简单。 
 
-###文档地址 https://msimw.gitbooks.io/retrofit2-spring4/content/
+### 文档地址 https://msimw.gitbooks.io/retrofit2-spring4/content/
 
-###Demo
+### Demo
 
     1.配置文件
     
