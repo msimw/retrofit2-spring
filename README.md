@@ -1,8 +1,15 @@
-##retrofit2 with spring4
+## retrofit2 with spring
+   Http 接口调用API(对httpclient的封装基于OkHttp3)，支持接口泛型注入。调用http接口就像调用本地接口一样简单（不用编写实现类）
+### 文档地址 https://msimw.gitbooks.io/retrofit2-spring/content/
 
-###Demo
+### 功能描述
+    1.与spring整合，将httpApi 交由spring容器管理，支持IOC
+    2.支持接口继承+泛型注入
+    3.支持直接返回结果对象
 
-    1.配置文件
+### 简单使用
+
+#### 1.配置文件
     
         <!--http连接池配置-->
         <bean id="connectionPool" class="okhttp3.ConnectionPool">
@@ -20,12 +27,14 @@
             <property name="basePackage" value="com"></property>
         </bean>
 
-    2.接口
-    
-        public interface IPushHttpApi<T> {
+#### 2.接口
         
+        
+        public interface IPushHttpApi<T> {
+      
             @POST("b")
-            public Call<String> push();
+            public String push();
+        
         }
         
         
@@ -34,7 +43,7 @@
         
         }
     
-    3.Junit
+#### 3.Junit
     
         public class DemoTest {
         
@@ -44,7 +53,7 @@
         
           @Test
           public void oneTest() throws IOException {
-              this.pushHttpApi.push().execute();
+              this.pushHttpApi.push();
           }
         
         
