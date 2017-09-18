@@ -1,6 +1,6 @@
-## retrofit2 with spring4
+## retrofit2 with spring
    Http 接口调用API(对httpclient的封装基于OkHttp3)，支持接口泛型注入。调用http接口就像调用本地接口一样简单（不用编写实现类）
-### 文档地址 https://msimw.gitbooks.io/retrofit2-spring4/content/
+### 文档地址 https://msimw.gitbooks.io/retrofit2-spring/content/
 
 ### 简单使用
 
