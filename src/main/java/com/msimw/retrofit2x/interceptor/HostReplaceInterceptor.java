@@ -27,11 +27,11 @@ public class HostReplaceInterceptor implements Interceptor {
 
     private String resolveUrl(Request request){
         String host = request.url().host();
-        if(host.contains("{")){
-          String key = host.substring(host.indexOf("{")+1,host.indexOf("}"));
+        if(host.contains("${")){
+          String key = host.substring(host.indexOf("{")+2,host.indexOf("}"));
           return request.header(key);
         }
-        return host;
+        return host+":"+request.url().port();
     }
 
 

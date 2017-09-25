@@ -126,13 +126,13 @@ public class RetrofitBeanFactory implements FactoryBean<Object> {
      */
     public static String resolveUrl(String url){
         String host = url;
-        if(host.contains("{")){
-            String key = host.substring(host.indexOf("{")+1,host.indexOf("}"));
+        if(host.contains("${")){
+            String key = host.substring(host.indexOf("{")+2,host.indexOf("}"));
             String value = ResourcesUtil.getValue("httpclient.httpapi",key);
             if(StringUtils.isEmpty(value)){
                 return host;
             }
-            return host.replaceAll("\\{[\\s\\S]*}",value);
+            return host.replaceAll("\\$\\{[\\s\\S]*}",value);
         }
 
         String value = ResourcesUtil.getValue("httpclient.httpapi",host);
