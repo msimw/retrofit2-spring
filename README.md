@@ -3,7 +3,6 @@
 ### 文档地址 https://msimw.gitbooks.io/retrofit2-spring/content/
 
 ### Maven
-
     <dependency>
         <groupId>com.github.msimw</groupId>
         <artifactId>retrofit2-spring</artifactId>
