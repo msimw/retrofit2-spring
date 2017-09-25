@@ -2,8 +2,18 @@
    Http 接口调用API(对httpclient的封装基于OkHttp3)，支持接口泛型注入。调用http接口就像调用本地接口一样简单（不用编写实现类）
 ### 文档地址 https://msimw.gitbooks.io/retrofit2-spring/content/
 
+### Maven
+
+    <dependency>
+        <groupId>com.github.msimw</groupId>
+        <artifactId>retrofit2-spring</artifactId>
+        <version>1.2-SNAPSHOT</version>
+    </dependency>
+
+
 ### 版本更新说明
-    v1.1 新增支持直接返回结果对象。
+    v1.2 1.修改动态获取URL的方式为${}
+         2.修复动态获取URL与配置URL冲突BUG
 
 ### 功能描述
     1.与spring整合，将httpApi 交由spring容器管理，支持IOC
