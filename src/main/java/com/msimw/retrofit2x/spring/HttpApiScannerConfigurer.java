@@ -28,22 +28,29 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
     private ConnectionPool connectionPool;
     private boolean throwFail = false;
 
+    private String httpDataSourceBeanName;
+
 
     private ApplicationContext applicationContext;
 
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+
+        //ConnectionPool bean = this.applicationContext.getBean(ConnectionPool.class);
+
         HttpApiScanner scanner = new HttpApiScanner(registry);
         scanner.setWriteTimeOut(this.writeTimeOut);
         scanner.setReadTimeOut(this.readTimeOut);
         scanner.setConnTimeOut(this.connTimeOut);
         scanner.setConnectionPool(this.connectionPool);
         scanner.setThrowFail(this.throwFail);
+        scanner.setHttpDataSourceBeanName(this.httpDataSourceBeanName);
         scanner.setResourceLoader(this.applicationContext);
         scanner.addIncludeFilter(new AnnotationTypeFilter(HttpApi.class));
         scanner.setBeanNameGenerator(null);
         scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
+
     }
 
 
@@ -69,6 +76,7 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
         return readTimeOut;
     }
 
+    @Deprecated
     public void setReadTimeOut(int readTimeOut) {
         this.readTimeOut = readTimeOut;
     }
@@ -77,6 +85,7 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
         return writeTimeOut;
     }
 
+    @Deprecated
     public void setWriteTimeOut(int writeTimeOut) {
         this.writeTimeOut = writeTimeOut;
     }
@@ -85,6 +94,7 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
         return connTimeOut;
     }
 
+    @Deprecated
     public void setConnTimeOut(int connTimeOut) {
         this.connTimeOut = connTimeOut;
     }
@@ -101,6 +111,7 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
         this.throwFail = throwFail;
     }
 
+    @Deprecated
     public void setConnectionPool(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
@@ -108,5 +119,14 @@ public class HttpApiScannerConfigurer implements BeanDefinitionRegistryPostProce
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
       this.applicationContext =applicationContext;
+    }
+
+
+    public String getHttpDataSourceBeanName() {
+        return httpDataSourceBeanName;
+    }
+
+    public void setHttpDataSourceBeanName(String httpDataSourceBeanName) {
+        this.httpDataSourceBeanName = httpDataSourceBeanName;
     }
 }
