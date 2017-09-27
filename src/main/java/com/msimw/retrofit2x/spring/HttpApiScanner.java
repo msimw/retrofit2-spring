@@ -4,11 +4,13 @@ import com.msimw.retrofit2x.annotation.HttpApi;
 import okhttp3.ConnectionPool;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Set;
 
@@ -26,6 +28,8 @@ public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
     private ConnectionPool connectionPool;
 
     private boolean throwFail = false;
+
+    private String httpDataSourceBeanName;
 
     public HttpApiScanner(BeanDefinitionRegistry registry) {
         super(registry);
@@ -52,14 +56,31 @@ public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
             definition.getPropertyValues().add("serviceClass", definition.getBeanClassName());
             definition.setBeanClass(RetrofitBeanFactory.class);
 
-            definition.getPropertyValues().add("readTimeOut", this.readTimeOut);
-            definition.getPropertyValues().add("writeTimeOut", this.writeTimeOut);
-            definition.getPropertyValues().add("connTimeOut", this.connTimeOut);
-            definition.getPropertyValues().add("connectionPool", this.connectionPool);
+            this.setHttpDataSource(definition);
             definition.getPropertyValues().add("throwFail", this.throwFail);
             definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
         }
         return beanDefinitionHolders;
+    }
+
+
+
+
+
+    private void setHttpDataSource(GenericBeanDefinition definition) {
+        if (connectionPool != null) {
+            HttpDataSource dataSource = new HttpDataSource();
+            dataSource.setConnectionPool(this.connectionPool);
+            dataSource.setConnTimeOut(this.connTimeOut);
+            dataSource.setReadTimeOut(this.readTimeOut);
+            dataSource.setWriteTimeOut(this.writeTimeOut);
+            definition.getPropertyValues().add("dataSource", dataSource);
+            return;
+        }
+
+        if(!StringUtils.isEmpty(this.httpDataSourceBeanName)) {
+            definition.getPropertyValues().add("dataSource", new RuntimeBeanReference(this.httpDataSourceBeanName));
+        }
     }
 
 
@@ -101,5 +122,13 @@ public class HttpApiScanner extends ClassPathBeanDefinitionScanner {
 
     public void setThrowFail(boolean throwFail) {
         this.throwFail = throwFail;
+    }
+
+    public String getHttpDataSourceBeanName() {
+        return httpDataSourceBeanName;
+    }
+
+    public void setHttpDataSourceBeanName(String httpDataSourceBeanName) {
+        this.httpDataSourceBeanName = httpDataSourceBeanName;
     }
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext-httpclient-retrofit2.xml")
+@ContextConfiguration("classpath:httpclient/applicationContext-httpclient-retrofit2.xml")
 public class DemoTest {
 
     @Autowired
