@@ -2,18 +2,17 @@
    Http 接口调用API(对httpclient的封装基于OkHttp3)，支持接口泛型注入。调用http接口就像调用本地接口一样简单（不用编写实现类）
 ### 文档地址 https://msimw.gitbooks.io/retrofit2-spring/content/
 
-    
 ### Maven
     <dependency>
         <groupId>com.github.msimw</groupId>
         <artifactId>retrofit2-spring</artifactId>
-        <version>1.3-SNAPSHOT</version>
+        <version>1.2-SNAPSHOT</version>
     </dependency>
 
 
 ### 版本更新说明
-    v1.3 1.修复spring中配置资源文件无效的问题
-         2.简化spring配置
+    v1.2 1.修改动态获取URL的方式为${}
+         2.修复动态获取URL与配置URL冲突BUG
 
 ### 功能描述
     1.与spring整合，将httpApi 交由spring容器管理，支持IOC
@@ -25,18 +24,18 @@
 #### 1.配置文件
     
         <!--http连接池配置-->
-        <bean id="httpDataSource"  class="com.msimw.retrofit2x.spring.HttpDataSource">
-            <property name="maxIdleConnections" value="${httpclient.maxIdleConnection}"></property>
-            <property name="keepAliveDurationNs" value="${httpclient.keepAliveDuration}"></property>
-            <property name="connTimeOut" value="${httpclient.connTimeOut}"></property>
-            <property name="readTimeOut" value="${httpclient.readTimeOut}"></property>
-            <property name="writeTimeOut" value="${httpclient.writeTimeOut}"></property>
+        <bean id="connectionPool" class="okhttp3.ConnectionPool">
+            <constructor-arg index="0"  value="100"/>
+            <constructor-arg index="1"  value="100"/>
+            <constructor-arg index="2"  value="MINUTES"/>
         </bean>
         
-        
-        <!--http扫包配置-->
+        <!--httpapi 扫描配置-->
         <bean class="com.msimw.retrofit2x.spring.HttpApiScannerConfigurer">
-            <!--与spring扫包配置一样-->
+            <property name="connTimeOut" value="15"></property>
+            <property name="writeTimeOut" value="15"></property>
+            <property name="readTimeOut" value="15"></property>
+            <property name="connectionPool" ref="connectionPool"></property>
             <property name="basePackage" value="com"></property>
         </bean>
 
