@@ -6,14 +6,9 @@ import com.msimw.retrofit2x.retrofit.Retrofit;
 import com.msimw.retrofit2x.retrofit.json.FastJsonConverterFactory;
 import com.msimw.retrofit2x.retrofit.log.LoggingInterceptor;
 import com.msimw.retrofit2x.util.ResourcesUtil;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
+import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,15 +16,16 @@ import java.util.concurrent.TimeUnit;
  * Created by msimw on 2017/7/12.
  * 工厂类
  */
-public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean<Object> {
+public class RetrofitBeanFactory implements FactoryBean<Object> {
 
-    private HttpDataSource dataSource;
+    private  int readTimeOut = 15;
+    private  int writeTimeOut = 15;
+    private  int connTimeOut = 15;
+    private ConnectionPool connectionPool;
 
     private Class<?> serviceClass;
 
     private boolean throwFail = false;
-
-    private ApplicationContext applicationContext;
 
 
 
@@ -41,16 +37,15 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
      * @param serviceClass
      */
     public Object createBean(String baseUrl, Class serviceClass, Class... interceptorClass) {
-            if (StringUtils.isEmpty(baseUrl)) {
-                return null;
-            }
-            this.checkDatasource();
+        if (StringUtils.isEmpty(baseUrl)) {
+            return null;
+        }
             //http client 配置
             OkHttpClient.Builder clientBuilder = new OkHttpClient().newBuilder()
-                    .connectTimeout(dataSource.getConnTimeOut(), TimeUnit.SECONDS)
-                    .writeTimeout(dataSource.getWriteTimeOut(), TimeUnit.SECONDS)
-                    .readTimeout(dataSource.getReadTimeOut(), TimeUnit.SECONDS)
-                    .connectionPool(dataSource.getConnectionPool())
+                    .connectTimeout(readTimeOut, TimeUnit.SECONDS)
+                    .writeTimeout(writeTimeOut, TimeUnit.SECONDS)
+                    .readTimeout(connTimeOut, TimeUnit.SECONDS)
+                    .connectionPool(connectionPool)
                     .addInterceptor(new HostReplaceInterceptor())
                     .addInterceptor(new LoggingInterceptor());
             if (interceptorClass != null && interceptorClass.length > 0) {
@@ -84,12 +79,36 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
         this.throwFail = throwFail;
     }
 
-    public HttpDataSource getDataSource() {
-        return dataSource;
+    public int getReadTimeOut() {
+        return readTimeOut;
     }
 
-    public void setDataSource(HttpDataSource dataSource) {
-        this.dataSource = dataSource;
+    public void setReadTimeOut(int readTimeOut) {
+        this.readTimeOut = readTimeOut;
+    }
+
+    public int getWriteTimeOut() {
+        return writeTimeOut;
+    }
+
+    public void setWriteTimeOut(int writeTimeOut) {
+        this.writeTimeOut = writeTimeOut;
+    }
+
+    public int getConnTimeOut() {
+        return connTimeOut;
+    }
+
+    public void setConnTimeOut(int connTimeOut) {
+        this.connTimeOut = connTimeOut;
+    }
+
+    public ConnectionPool getConnectionPool() {
+        return connectionPool;
+    }
+
+    public void setConnectionPool(ConnectionPool connectionPool) {
+        this.connectionPool = connectionPool;
     }
 
     public Class<?> getServiceClass() {
@@ -108,7 +127,7 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
     public static String resolveUrl(String url){
         String host = url;
         if(host.contains("${")){
-            String key = host.substring(host.indexOf("${")+2,host.indexOf("}"));
+            String key = host.substring(host.indexOf("{")+2,host.indexOf("}"));
             String value = ResourcesUtil.getValue("httpclient.httpapi",key);
             if(StringUtils.isEmpty(value)){
                 return host;
@@ -144,18 +163,5 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
     @Override
     public boolean isSingleton() {
         return true;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-      this.applicationContext = applicationContext;
-    }
-
-
-
-    protected void checkDatasource(){
-        if(this.dataSource==null){
-            this.dataSource =  this.applicationContext.getBean(HttpDataSource.class);
-        }
     }
 }

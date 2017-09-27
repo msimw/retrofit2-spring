@@ -7,19 +7,21 @@
                 http://www.springframework.org/schema/context
                 http://www.springframework.org/schema/context/spring-context-4.1.xsd">
 
-    <context:property-placeholder location="classpath:httpclient/httpclient.properties" local-override="true" system-properties-mode="OVERRIDE" ignore-unresolvable="true"></context:property-placeholder>
 
     <!--http连接池配置-->
-    <bean id="httpDataSource"  class="com.msimw.retrofit2x.spring.HttpDataSource">
-        <property name="maxIdleConnections" value="${httpclient.maxIdleConnection}"></property>
-        <property name="keepAliveDurationNs" value="${httpclient.keepAliveDuration}"></property>
-        <property name="connTimeOut" value="${httpclient.connTimeOut}"></property>
-        <property name="readTimeOut" value="${httpclient.readTimeOut}"></property>
-        <property name="writeTimeOut" value="${httpclient.writeTimeOut}"></property>
+    <bean id="connectionPool" class="okhttp3.ConnectionPool">
+        <constructor-arg index="0" value="100"/>
+        <constructor-arg index="1" value="100"/>
+        <constructor-arg index="2" value="MINUTES"/>
+
     </bean>
 
     <!--http扫包配置-->
     <bean class="com.msimw.retrofit2x.spring.HttpApiScannerConfigurer">
+        <property name="connTimeOut" value="15"></property>
+        <property name="writeTimeOut" value="15"></property>
+        <property name="readTimeOut" value="15"></property>
+        <property name="connectionPool" ref="connectionPool"></property>
         <!--与spring扫包配置一样-->
         <property name="basePackage" value="com"></property>
     </bean>
