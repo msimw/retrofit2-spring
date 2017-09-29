@@ -12,11 +12,15 @@
 
 
 ### 版本更新说明
-    v1.3 1.修复spring中配置资源文件无效的问题
-         2.简化spring配置
+    v1.4 1.支持用户自定义httpapi资源文件
+         2.新增对cookie配置
+         3.支持https配置
+         4.支持自定义dns配置
+         5.支持缓存配置
+         
 
 ### 功能描述
-    1.与spring整合，将httpApi 交由spring容器管理，支持IOC
+    1.与spring整合，将httpApi 交由spring容器管理（逆向mvc），支持IOC
     2.支持接口继承+泛型注入
     3.支持直接返回结果对象
 

@@ -34,6 +34,8 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
 
 
 
+
+
     /**
      * 创建service服务实体
      *
@@ -53,6 +55,24 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
                     .connectionPool(dataSource.getConnectionPool())
                     .addInterceptor(new HostReplaceInterceptor())
                     .addInterceptor(new LoggingInterceptor());
+
+                    if(this.dataSource.getAuthenticator()!=null){
+                        clientBuilder.authenticator(this.dataSource.getAuthenticator());
+                    }
+                    if(this.dataSource.getCertificatePinner()!=null){
+                        clientBuilder.certificatePinner(this.dataSource.getCertificatePinner());
+                    }
+                    if(this.dataSource.getCookieJar()!=null){
+                        clientBuilder.cookieJar(this.dataSource.getCookieJar());
+                    }
+                    if(this.dataSource.getCache()!=null){
+                        clientBuilder.cache(this.dataSource.getCache());
+                    }
+                    if(this.dataSource.getDns()!=null){
+                        clientBuilder.dns(this.dataSource.getDns());
+                    }
+
+
             if (interceptorClass != null && interceptorClass.length > 0) {
                 for (Class clazz : interceptorClass) {
                     if (Interceptor.class.isAssignableFrom(clazz)) {
@@ -105,18 +125,18 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
      * @param url
      * @return
      */
-    public static String resolveUrl(String url){
+    public  String resolveUrl(String url){
         String host = url;
         if(host.contains("${")){
             String key = host.substring(host.indexOf("${")+2,host.indexOf("}"));
-            String value = ResourcesUtil.getValue("httpclient.httpapi",key);
+            String value = ResourcesUtil.getValue(this.dataSource.getHttpApiResourceBundleFileName(),key);
             if(StringUtils.isEmpty(value)){
                 return host;
             }
             return host.replaceAll("\\$\\{[\\s\\S]*}",value);
         }
 
-        String value = ResourcesUtil.getValue("httpclient.httpapi",host);
+        String value = ResourcesUtil.getValue(this.dataSource.getHttpApiResourceBundleFileName(),host);
         if (StringUtils.isEmpty(value)) {
             return host;
         }
