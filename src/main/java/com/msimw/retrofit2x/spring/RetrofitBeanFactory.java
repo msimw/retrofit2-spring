@@ -33,9 +33,6 @@ public class RetrofitBeanFactory  implements ApplicationContextAware,FactoryBean
 
 
 
-
-
-
     /**
      * 创建service服务实体
      *
