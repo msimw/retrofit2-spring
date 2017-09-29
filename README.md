@@ -7,7 +7,7 @@
     <dependency>
         <groupId>com.github.msimw</groupId>
         <artifactId>retrofit2-spring</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
     </dependency>
 
 
